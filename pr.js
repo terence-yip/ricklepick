@@ -105,10 +105,23 @@ const waitForElement = async function (selector, timeoutMs) {
     return null;
 }
 
+const waitForNullElement = async function(selector, timeoutMs) {
+    const endTime = new Date(new Date().getTime() + timeoutMs);
+    while (new Date() < endTime) {
+        const element = document.querySelector(selector);
+        if (!element || element.style.display === "none") {
+            return;
+        }
+        await sleep(20);
+    }
+    console.log("Still finding element: ");
+    console.log(selector);
+    return false;
+}
+
 const waitForLoadingToPass = async function () {
-    await sleep(500);
-    // waitForElement('div[style*="display: block"]#overlay_layer', 500);
-    // waitForElement('div[style*="display: none"]#overlay_layer', 500);
+    // await sleep(500);
+    await waitForNullElement("#overlay_layer", 5000);
 }
 
 const getCourtTable = async function (sport) {
