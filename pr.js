@@ -110,7 +110,7 @@ const waitForNullElement = async function(selector, timeoutMs) {
     while (new Date() < endTime) {
         const element = document.querySelector(selector);
         if (!element || element.style.display === "none") {
-            return;
+            return true;
         }
         await sleep(20);
     }
